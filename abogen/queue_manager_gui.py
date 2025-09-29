@@ -51,7 +51,7 @@ class QueueListItemWidget(QWidget):
         import os
 
         name_label = ElidedLabel(os.path.basename(file_name))
-        char_label = QLabel(f"Chars: {char_count}")
+        char_label = QLabel(f"Caracteres: {char_count}")
         char_label.setStyleSheet(f"color: {COLORS['LIGHT_DISABLED']};")
         char_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         char_label.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Preferred)
@@ -120,7 +120,7 @@ class DroppableQueueListWidget(QListWidget):
 
 
 class QueueManager(QDialog):
-    def __init__(self, parent, queue: list, title="Queue Manager", size=(600, 700)):
+    def __init__(self, parent, queue: list, title="Gerenciador de Fila", size=(600, 700)):
         super().__init__()
         self.queue = queue
         self._original_queue = deepcopy(
@@ -139,11 +139,11 @@ class QueueManager(QDialog):
         # Add informative instructions at the top
         instructions = QLabel(
             "<h2>How Queue Works?</h2>"
-            "You can add text files (.txt) directly using the '<b>Add files</b>' button below. "
-            "To add PDF, EPUB or markdown files, use the input box in the main window and click the <b>'Add to Queue'</b> button. "
-            "Each file in the queue keeps the configuration settings active when it was added. "
-            "Changing the main window configuration afterward <b>does not</b> affect files already in the queue. "
-            "You can view each file's configuration by hovering over them."
+            "Você pode adicionar arquivos de texto (.txt) diretamente usando o botão '<b>Adicionar arquivos</b>' abaixo. "
+            "Para adicionar arquivos PDF, EPUB ou markdown, use a caixa de entrada na janela principal e clique no botão <b>'Adicionar à Fila'</b>. "
+            "Cada arquivo na fila mantém as configurações ativas quando foi adicionado. "
+            "Alterar a configuração da janela principal posteriormente <b>não</b> afeta arquivos já na fila. "
+            "Você pode visualizar a configuração de cada arquivo passando o mouse sobre eles."
         )
         instructions.setAlignment(Qt.AlignLeft)
         instructions.setWordWrap(True)
@@ -151,7 +151,7 @@ class QueueManager(QDialog):
         layout.addWidget(instructions)
         # Overlay label for empty queue
         self.empty_overlay = QLabel(
-            "Drag and drop your text files here or use the 'Add files' button.",
+            "Arraste e solte seus arquivos de texto aqui ou use o botão 'Adicionar arquivos'.",
             self.listwidget,
         )
         self.empty_overlay.setAlignment(Qt.AlignCenter)
@@ -168,19 +168,19 @@ class QueueManager(QDialog):
         button_row.setContentsMargins(0, 0, 0, 0)  # optional: no margins for button row
         button_row.setSpacing(7)  # set spacing between buttons
         # Add files button
-        add_files_button = QPushButton("Add files")
+        add_files_button = QPushButton("Adicionar arquivos")
         add_files_button.setFixedHeight(40)
         add_files_button.clicked.connect(self.add_more_files)
         button_row.addWidget(add_files_button)
 
         # Remove button
-        self.remove_button = QPushButton("Remove selected")
+        self.remove_button = QPushButton("Remover selecionados")
         self.remove_button.setFixedHeight(40)
         self.remove_button.clicked.connect(self.remove_item)
         button_row.addWidget(self.remove_button)
 
         # Clear button
-        self.clear_button = QPushButton("Clear Queue")
+        self.clear_button = QPushButton("Limpar Fila")
         self.clear_button.setFixedHeight(40)
         self.clear_button.clicked.connect(self.clear_queue)
         button_row.addWidget(self.clear_button)
@@ -283,8 +283,8 @@ class QueueManager(QDialog):
         if len(rows) > 1:
             reply = QMessageBox.question(
                 self,
-                "Confirm Remove",
-                f"Are you sure you want to remove {len(rows)} selected items from the queue?",
+                "Confirmar Remoção",
+                f"Tem certeza de que deseja remover {len(rows)} itens selecionados da fila?",
                 QMessageBox.Yes | QMessageBox.No,
                 QMessageBox.No,
             )
@@ -302,8 +302,8 @@ class QueueManager(QDialog):
         if len(self.queue) > 1:
             reply = QMessageBox.question(
                 self,
-                "Confirm Clear Queue",
-                f"Are you sure you want to clear {len(self.queue)} items from the queue?",
+                "Confirmar Limpeza da Fila",
+                f"Tem certeza de que deseja limpar {len(self.queue)} itens da fila?",
                 QMessageBox.Yes | QMessageBox.No,
                 QMessageBox.No,
             )
@@ -435,8 +435,8 @@ class QueueManager(QDialog):
         if duplicates:
             QMessageBox.warning(
                 self,
-                "Duplicate Item(s)",
-                f"Skipping {len(duplicates)} file(s) with the same attributes, already in the queue.",
+                "Item(s) Duplicado(s)",
+                f"Ignorando {len(duplicates)} arquivo(s) com os mesmos atributos, já na fila.",
             )
         self.process_queue()
         self.update_button_states()
@@ -447,7 +447,7 @@ class QueueManager(QDialog):
 
         # Only allow .txt files
         files, _ = QFileDialog.getOpenFileNames(
-            self, "Select .txt files", "", "Text Files (*.txt)"
+            self, "Selecionar arquivos .txt", "", "Arquivos de Texto (*.txt)"
         )
         if not files:
             return
@@ -464,9 +464,9 @@ class QueueManager(QDialog):
             selected_count = len(self.listwidget.selectedItems())
             self.remove_button.setEnabled(selected_count > 0)
             if selected_count > 1:
-                self.remove_button.setText(f"Remove selected ({selected_count})")
+                self.remove_button.setText(f"Remover selecionados ({selected_count})")
             else:
-                self.remove_button.setText("Remove selected")
+                self.remove_button.setText("Remover selecionados")
         # Disable Clear if queue is empty
         if hasattr(self, "clear_button"):
             self.clear_button.setEnabled(bool(self.queue))
@@ -482,12 +482,12 @@ class QueueManager(QDialog):
         menu = QMenu(self)
         if len(selected_items) == 1:
             # Add Remove action
-            remove_action = QAction("Remove this item", self)
+            remove_action = QAction("Remover este item", self)
             remove_action.triggered.connect(self.remove_item)
             menu.addAction(remove_action)
 
             # Add Open file action
-            open_file_action = QAction("Open file", self)
+            open_file_action = QAction("Abrir arquivo", self)
 
             def open_file():
                 from PyQt5.QtWidgets import QMessageBox
@@ -506,7 +506,7 @@ class QueueManager(QDialog):
                         target_path = getattr(q, "save_base_path", None) or q.file_name
                         if not os.path.exists(target_path):
                             QMessageBox.warning(
-                                self, "File Not Found", f"The file does not exist."
+                                self, "Arquivo Não Encontrado", f"O arquivo não existe."
                             )
                             return
                         QDesktopServices.openUrl(QUrl.fromLocalFile(target_path))
@@ -540,7 +540,7 @@ class QueueManager(QDialog):
                 # path_label should be either 'display' or 'processing'
                 p = display_path if path_label == 'display' else processing_path
                 if not p:
-                    QMessageBox.warning(self, "File Not Found", "Path is not available.")
+                    QMessageBox.warning(self, "Arquivo Não Encontrado", "Caminho não disponível.")
                     return
                 # If the stored path is the display path (original) but the actual file may be
                 # stored on the queue object differently, try to resolve via the queue entry.
@@ -563,18 +563,18 @@ class QueueManager(QDialog):
                     target_path = p
 
                 if not os.path.exists(target_path):
-                    QMessageBox.warning(self, "File Not Found", f"The file does not exist: {target_path}")
+                    QMessageBox.warning(self, "Arquivo Não Encontrado", f"O arquivo não existe: {target_path}")
                     return
                 folder = os.path.dirname(target_path)
                 if os.path.exists(folder):
                     QDesktopServices.openUrl(QUrl.fromLocalFile(folder))
 
             if is_document_input:
-                processed_action = QAction("Go to processed file", self)
+                processed_action = QAction("Ir para arquivo processado", self)
                 processed_action.triggered.connect(lambda: open_folder_for('processing'))
                 menu.addAction(processed_action)
 
-                input_action = QAction("Go to input file", self)
+                input_action = QAction("Ir para arquivo de entrada", self)
                 input_action.triggered.connect(lambda: open_folder_for('display'))
                 menu.addAction(input_action)
             else:
@@ -594,7 +594,7 @@ class QueueManager(QDialog):
                             target_path = getattr(q, "save_base_path", None) or q.file_name
                             if not os.path.exists(target_path):
                                 QMessageBox.warning(
-                                    self, "File Not Found", f"The file does not exist."
+                                    self, "Arquivo Não Encontrado", f"O arquivo não existe."
                                 )
                                 return
                             folder = os.path.dirname(target_path)

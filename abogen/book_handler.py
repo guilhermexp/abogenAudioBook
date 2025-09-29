@@ -59,8 +59,8 @@ class HandlerDialog(QDialog):
         book_name = os.path.splitext(os.path.basename(book_path))[0]
 
         # Set window title based on file type and book name
-        item_type = "Chapters" if self.file_type in ["epub", "markdown"] else "Pages"
-        self.setWindowTitle(f'Select {item_type} - {book_name}')
+        item_type = "Capítulos" if self.file_type in ["epub", "markdown"] else "Páginas"
+        self.setWindowTitle(f'Selecionar {item_type} - {book_name}')
         self.resize(1200, 900)
         self._block_signals = False  # Flag to prevent recursive signals
         # Configure window: remove help button and allow resizing
@@ -147,7 +147,7 @@ class HandlerDialog(QDialog):
         self._preprocess_content()
 
         # Add "Information" item at the beginning of the tree
-        info_item = QTreeWidgetItem(self.treeWidget, ["Information"])
+        info_item = QTreeWidgetItem(self.treeWidget, ["Informações"])
         info_item.setData(0, Qt.UserRole, "info:bookinfo")
         info_item.setFlags(info_item.flags() & ~Qt.ItemIsUserCheckable)
         font = info_item.font(0)
@@ -355,7 +355,7 @@ class HandlerDialog(QDialog):
                         title = h1.get_text(strip=True)
 
                     if not title:
-                        title = f"Untitled Chapter {i + 1}"
+                        title = f"Capítulo Sem Título {i + 1}"
                     synthetic_toc.append(
                         (epub.Link(doc_href, title, doc_href), [])
                     )  # Wrap in tuple and empty list for compatibility

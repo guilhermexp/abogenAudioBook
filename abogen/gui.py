@@ -158,7 +158,7 @@ class InputBox(QLabel):
         self.setAlignment(Qt.AlignCenter)
         self.setAcceptDrops(True)
         self.setText(
-            "Drag and drop your file here or click to browse.\n(.txt, .epub, .pdf, .md)"
+            "Arraste e solte seu arquivo aqui ou clique para navegar.\n(.txt, .epub, .pdf, .md)"
         )
         self.setStyleSheet(
             f"QLabel {{ {self.STYLE_DEFAULT} }} QLabel:hover {{ {self.STYLE_DEFAULT_HOVER} }}"
@@ -173,29 +173,29 @@ class InputBox(QLabel):
         self.clear_btn.clicked.connect(self.clear_input)
 
         # Add Chapters button
-        self.chapters_btn = QPushButton("Chapters", self)
+        self.chapters_btn = QPushButton("Capítulos", self)
         self.chapters_btn.setStyleSheet("QPushButton { padding: 6px 10px; }")
         self.chapters_btn.hide()
         self.chapters_btn.clicked.connect(self.on_chapters_clicked)
 
         # Add Textbox button with no padding
-        self.textbox_btn = QPushButton("Textbox", self)
+        self.textbox_btn = QPushButton("Caixa de Texto", self)
         self.textbox_btn.setStyleSheet("QPushButton { padding: 6px 10px; }")
-        self.textbox_btn.setToolTip("Input text directly instead of using a file")
+        self.textbox_btn.setToolTip("Digite o texto diretamente ao invés de usar um arquivo")
         self.textbox_btn.clicked.connect(self.on_textbox_clicked)
 
         # Add Edit button matching the textbox button
-        self.edit_btn = QPushButton("Edit", self)
+        self.edit_btn = QPushButton("Editar", self)
         self.edit_btn.setStyleSheet("QPushButton { padding: 6px 10px; }")
-        self.edit_btn.setToolTip("Edit the current text file")
+        self.edit_btn.setToolTip("Editar o arquivo de texto atual")
         self.edit_btn.clicked.connect(self.on_edit_clicked)
         self.edit_btn.hide()
 
         # Add Go to folder button
-        self.go_to_folder_btn = QPushButton("Go to folder", self)
+        self.go_to_folder_btn = QPushButton("Ir para pasta", self)
         self.go_to_folder_btn.setStyleSheet("QPushButton { padding: 6px 10px; }")
         self.go_to_folder_btn.setToolTip(
-            "Open the folder that contains the converted file"
+            "Abrir a pasta que contém o arquivo convertido"
         )
         self.go_to_folder_btn.clicked.connect(self.on_go_to_folder_clicked)
         self.go_to_folder_btn.hide()
@@ -301,9 +301,9 @@ class InputBox(QLabel):
             file_type = self.window().selected_file_type
             # Adjust button text based on file type
             if file_type == "epub" or file_type == "md" or file_type == "markdown":
-                self.chapters_btn.setText(f"Chapters ({chapter_count})")
+                self.chapters_btn.setText(f"Capítulos ({chapter_count})")
             else:  # PDF - always use Pages
-                self.chapters_btn.setText(f"Pages ({chapter_count})")
+                self.chapters_btn.setText(f"Páginas ({chapter_count})")
 
         # Hide textbox and show edit only for .txt files
         self.textbox_btn.hide()
@@ -354,7 +354,7 @@ class InputBox(QLabel):
         )
         self.clear_btn.hide()
         self.chapters_btn.hide()
-        self.chapters_btn.setText("Chapters")  # Reset text
+        self.chapters_btn.setText("Capítulos")  # Reset text
         # Show textbox and hide edit when input is cleared
         self.textbox_btn.show()
         self.edit_btn.hide()
@@ -455,7 +455,7 @@ class InputBox(QLabel):
                 )
                 event.acceptProposedAction()
             else:
-                self.set_error("Please drop a .txt, .epub, .pdf, or .md file.")
+                self.set_error("Por favor, solte um arquivo .txt, .epub, .pdf ou .md.")
                 event.ignore()
         else:
             event.ignore()
@@ -542,13 +542,13 @@ class InputBox(QLabel):
                 folder_path = os.path.dirname(file_to_check)
                 QDesktopServices.openUrl(QUrl.fromLocalFile(folder_path))
             else:
-                QMessageBox.warning(win, "Error", "Converted file not found.")
+                QMessageBox.warning(win, "Erro", "Arquivo convertido não encontrado.")
 
 
 class TextboxDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setWindowTitle("Enter Text")
+        self.setWindowTitle("Digite o Texto")
         self.setWindowFlags(
             Qt.Window | Qt.WindowCloseButtonHint | Qt.WindowMaximizeButtonHint
         )
@@ -558,14 +558,14 @@ class TextboxDialog(QDialog):
 
         # Instructions
         instructions = QLabel(
-            "Enter or paste the text you want to convert to audio:", self
+            "Digite ou cole o texto que você quer converter para áudio:", self
         )
         layout.addWidget(instructions)
 
         # Text edit area
         self.text_edit = QTextEdit(self)
         self.text_edit.setAcceptRichText(False)
-        self.text_edit.setPlaceholderText("Type or paste your text here...")
+        self.text_edit.setPlaceholderText("Digite ou cole seu texto aqui...")
         layout.addWidget(self.text_edit)
 
         # Character count label
@@ -580,10 +580,10 @@ class TextboxDialog(QDialog):
 
         self.save_as_button = QPushButton("Save as text", self)
         self.save_as_button.clicked.connect(self.save_as_text)
-        self.save_as_button.setToolTip("Save the current text to a file")
+        self.save_as_button.setToolTip("Salvar o texto atual em um arquivo")
 
         self.insert_chapter_btn = QPushButton("Insert Chapter Marker", self)
-        self.insert_chapter_btn.setToolTip("Insert a chapter marker at the cursor")
+        self.insert_chapter_btn.setToolTip("Inserir um marcador de capítulo no cursor")
         self.insert_chapter_btn.clicked.connect(self.insert_chapter_marker)
         button_layout.addWidget(self.insert_chapter_btn)
 
@@ -605,7 +605,7 @@ class TextboxDialog(QDialog):
     def update_char_count(self):
         text = self.text_edit.toPlainText()
         count = calculate_text_length(text)
-        self.char_count_label.setText(f"Characters: {count:,}")
+        self.char_count_label.setText(f"Caracteres: {count:,}")
 
     def get_text(self):
         return self.text_edit.toPlainText()
@@ -614,7 +614,7 @@ class TextboxDialog(QDialog):
         text = self.text_edit.toPlainText()
         # Check if text is empty based on character count
         if calculate_text_length(text) == 0:
-            QMessageBox.warning(self, "Textbox Error", "Text cannot be empty.")
+            QMessageBox.warning(self, "Erro da Caixa de Texto", "O texto não pode estar vazio.")
             return
 
         # If the text hasn't changed, treat as cancel
@@ -625,11 +625,11 @@ class TextboxDialog(QDialog):
             if hasattr(self, "is_non_cache_file") and self.is_non_cache_file:
                 msg_box = QMessageBox(self)
                 msg_box.setIcon(QMessageBox.Warning)
-                msg_box.setWindowTitle("File Overwrite Warning")
+                msg_box.setWindowTitle("Aviso de Sobrescrita de Arquivo")
                 msg_box.setText(
                     f"You are about to overwrite the original file:\n{self.non_cache_file_path}"
                 )
-                msg_box.setInformativeText("Do you want to continue?")
+                msg_box.setInformativeText("Você quer continuar?")
                 msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
                 msg_box.setDefaultButton(QMessageBox.No)
 
@@ -644,7 +644,7 @@ class TextboxDialog(QDialog):
         try:
             text = self.text_edit.toPlainText()
             if not text.strip():
-                QMessageBox.warning(self, "Save Error", "There is no text to save.")
+                QMessageBox.warning(self, "Erro ao Salvar", "Não há texto para salvar.")
                 return
 
             # Get default filename from original file if editing
@@ -871,7 +871,7 @@ class abogen(QWidget):
         # Speed controls
         speed_layout = QVBoxLayout()
         speed_layout.setSpacing(2)
-        speed_layout.addWidget(QLabel("Speed:", self))
+        speed_layout.addWidget(QLabel("Velocidade:", self))
         self.speed_slider = QSlider(Qt.Horizontal, self)
         self.speed_slider.setMinimum(10)
         self.speed_slider.setMaximum(200)
@@ -887,7 +887,7 @@ class abogen(QWidget):
         # Voice selection
         voice_layout = QHBoxLayout()
         voice_layout.setSpacing(7)
-        voice_label = QLabel("Select voice:", self)
+        voice_label = QLabel("Selecionar voz:", self)
         voice_layout.addWidget(voice_label)
         self.voice_combo = QComboBox(self)
         self.voice_combo.currentIndexChanged.connect(self.on_voice_combo_changed)
@@ -904,7 +904,7 @@ class abogen(QWidget):
         self.btn_voice_formula_mixer = QPushButton(self)
         mixer_icon_path = get_resource_path("abogen.assets", "voice_mixer.png")
         self.btn_voice_formula_mixer.setIcon(QIcon(mixer_icon_path))
-        self.btn_voice_formula_mixer.setToolTip("Mix and match voices")
+        self.btn_voice_formula_mixer.setToolTip("Misturar e combinar vozes")
         self.btn_voice_formula_mixer.setFixedSize(40, 36)
         self.btn_voice_formula_mixer.setStyleSheet("QPushButton { padding: 6px 12px; }")
         self.btn_voice_formula_mixer.clicked.connect(self.show_voice_formula_dialog)
@@ -935,7 +935,7 @@ class abogen(QWidget):
         self.btn_preview = QPushButton(self)
         self.btn_preview.setIcon(self.play_icon)
         self.btn_preview.setIconSize(QPixmap(20, 20).size())
-        self.btn_preview.setToolTip("Preview selected voice")
+        self.btn_preview.setToolTip("Pré-visualizar voz selecionada")
         self.btn_preview.setFixedSize(40, 36)
         self.btn_preview.setStyleSheet("QPushButton { padding: 6px 12px; }")
         self.btn_preview.clicked.connect(self.preview_voice)
@@ -947,7 +947,7 @@ class abogen(QWidget):
         # Generate subtitles
         subtitle_layout = QHBoxLayout()
         subtitle_layout.setSpacing(7)
-        subtitle_label = QLabel("Generate subtitles:", self)
+        subtitle_label = QLabel("Gerar legendas:", self)
         subtitle_layout.addWidget(subtitle_label)
         self.subtitle_combo = QComboBox(self)
         self.subtitle_combo.setToolTip(
@@ -982,7 +982,7 @@ class abogen(QWidget):
         # Output voice format
         format_layout = QHBoxLayout()
         format_layout.setSpacing(7)
-        format_label = QLabel("Output voice format:", self)
+        format_label = QLabel("Formato de saída da voz:", self)
         format_layout.addWidget(format_label)
         self.format_combo = QComboBox(self)
         self.format_combo.setStyleSheet(
@@ -1012,7 +1012,7 @@ class abogen(QWidget):
         # Output subtitle format
         subtitle_format_layout = QHBoxLayout()
         subtitle_format_layout.setSpacing(7)
-        subtitle_format_label = QLabel("Output subtitle format:", self)
+        subtitle_format_label = QLabel("Formato de saída das legendas:", self)
         subtitle_format_layout.addWidget(subtitle_format_label)
         self.subtitle_format_combo = QComboBox(self)
         self.subtitle_format_combo.setStyleSheet(
@@ -1055,12 +1055,12 @@ class abogen(QWidget):
         # Replace single newlines dropdown (acts like checkbox)
         replace_newlines_layout = QHBoxLayout()
         replace_newlines_layout.setSpacing(7)
-        replace_newlines_label = QLabel("Replace single newlines:", self)
+        replace_newlines_label = QLabel("Substituir quebras de linha simples:", self)
         replace_newlines_layout.addWidget(replace_newlines_label)
         self.replace_newlines_combo = QComboBox(self)
         self.replace_newlines_combo.addItems(["Disabled", "Enabled"])
         self.replace_newlines_combo.setToolTip(
-            "Replace single newlines in the input text with spaces before processing."
+            "Substituir quebras de linha simples no texto de entrada por espaços antes do processamento."
         )
         self.replace_newlines_combo.setStyleSheet(
             "QComboBox { min-height: 20px; padding: 6px 12px; }"
@@ -1081,7 +1081,7 @@ class abogen(QWidget):
         # Save location
         save_layout = QHBoxLayout()
         save_layout.setSpacing(7)
-        save_label = QLabel("Save location:", self)
+        save_label = QLabel("Local de salvamento:", self)
         save_layout.addWidget(save_label)
         self.save_combo = QComboBox(self)
         save_options = [
@@ -1104,7 +1104,7 @@ class abogen(QWidget):
         save_path_row = QHBoxLayout(self.save_path_row_widget)
         save_path_row.setSpacing(7)
         save_path_row.setContentsMargins(0, 0, 0, 0)
-        selected_folder_label = QLabel("Selected folder:", self.save_path_row_widget)
+        selected_folder_label = QLabel("Pasta selecionada:", self.save_path_row_widget)
         save_path_row.addWidget(selected_folder_label)
         self.save_path_label = QLabel("", self.save_path_row_widget)
         self.save_path_label.setStyleSheet(f"QLabel {{ color: {COLORS['GREEN']}; }}")
@@ -1119,7 +1119,7 @@ class abogen(QWidget):
         self.gpu_checkbox = QCheckBox("Use GPU Acceleration (if available)", self)
         self.gpu_checkbox.setChecked(self.use_gpu)
         self.gpu_checkbox.setToolTip(
-            "Uncheck to force using CPU even if a compatible GPU is detected."
+            "Desmarque para forçar o uso da CPU mesmo se uma GPU compatível for detectada."
         )
         self.gpu_checkbox.stateChanged.connect(self.on_gpu_setting_changed)
         gpu_checkbox_layout.addWidget(self.gpu_checkbox)
@@ -1139,7 +1139,7 @@ class abogen(QWidget):
         else:
             # Fallback text if icon not found
             self.settings_btn.setText("⚙")
-        self.settings_btn.setToolTip("Settings")
+        self.settings_btn.setToolTip("Configurações")
         self.settings_btn.setFixedSize(36, 36)
         self.settings_btn.clicked.connect(self.show_settings_menu)
         gpu_layout.addWidget(self.settings_btn)
@@ -1161,7 +1161,7 @@ class abogen(QWidget):
         self.progress_bar.hide()
         container_layout.addWidget(self.progress_bar)
         # ETR Label
-        self.etr_label = QLabel("Estimated time remaining: Calculating...", self)
+        self.etr_label = QLabel("Tempo estimado restante: Calculando...", self)
         self.etr_label.setAlignment(Qt.AlignCenter)
         self.etr_label.hide()
         container_layout.addWidget(self.etr_label)
@@ -1180,14 +1180,14 @@ class abogen(QWidget):
 
         # Create buttons with their functions
         finish_buttons = [
-            ("Open file", self.open_file, "Open the output file."),
+            ("Abrir arquivo", self.open_file, "Abrir o arquivo de saída."),
             (
                 "Go to folder",
                 self.go_to_file,
-                "Open the folder containing the output file.",
+                "Abrir a pasta que contém o arquivo de saída.",
             ),
-            ("New Conversion", self.reset_ui, "Start a new conversion."),
-            ("Go back", self.go_back_ui, "Return to the previous screen."),
+            ("Nova Conversão", self.reset_ui, "Iniciar uma nova conversão."),
+            ("Voltar", self.go_back_ui, "Retornar à tela anterior."),
         ]
 
         for text, func, tip in finish_buttons:
@@ -1280,7 +1280,7 @@ class abogen(QWidget):
                     file_type = "epub"
                     item_type = "chapters"
 
-                error_msg = f"No {item_type} selected."
+                error_msg = f"Nenhum {item_type} selecionado."
                 self._show_error_message_box(f"{file_type.upper()} Error", error_msg)
                 return False
             self.selected_chapters = all_checked_hrefs
@@ -1426,7 +1426,7 @@ class abogen(QWidget):
         if dialog.exec_() == QDialog.Accepted:
             text = dialog.get_text()
             if not text.strip():
-                self._show_error_message_box("Textbox Error", "Text cannot be empty.")
+                self._show_error_message_box("Erro da Caixa de Texto", "O texto não pode estar vazio.")
                 return
             try:
                 if editing:
@@ -1656,23 +1656,23 @@ class abogen(QWidget):
         self.btn_clear_queue.setEnabled(enabled)
         # Update Manage Queue button text with count
         if enabled:
-            self.btn_manage_queue.setText(f"Manage Queue ({len(self.queued_items)})")
+            self.btn_manage_queue.setText(f"Gerenciar Fila ({len(self.queued_items)})")
             self.btn_manage_queue.setStyleSheet(
                 f"QPushButton {{ color: {COLORS['GREEN']}; }}"
             )
         else:
-            self.btn_manage_queue.setText("Manage Queue")
+            self.btn_manage_queue.setText("Gerenciar Fila")
             self.btn_manage_queue.setStyleSheet("")
         # Change main Start button to 'Start queue' if queue has items
         if enabled:
-            self.btn_start.setText(f"Start queue ({len(self.queued_items)})")
+            self.btn_start.setText(f"Iniciar fila ({len(self.queued_items)})")
             try:
                 self.btn_start.clicked.disconnect()
             except Exception:
                 pass
             self.btn_start.clicked.connect(self.start_queue)
         else:
-            self.btn_start.setText("Start")
+            self.btn_start.setText("Iniciar")
             try:
                 self.btn_start.clicked.disconnect()
             except Exception:
@@ -1703,7 +1703,7 @@ class abogen(QWidget):
             save_base_path = file_to_queue  # For non-EPUB, it's the same
         
         if not file_to_queue:
-            self.input_box.set_error("Please add a file.")
+            self.input_box.set_error("Por favor, adicione um arquivo.")
             return
         actual_subtitle_mode = self.get_actual_subtitle_mode()
         voice_formula = self.get_voice_formula()
@@ -1740,7 +1740,7 @@ class abogen(QWidget):
                     == item_queue.save_base_path
             ):
                 QMessageBox.warning(
-                    self, "Duplicate Item", "This item is already in the queue."
+                    self, "Item Duplicado", "Este item já está na fila."
                 )
                 return
 
@@ -1756,7 +1756,7 @@ class abogen(QWidget):
             reply = QMessageBox.question(
                 self,
                 "Confirm Clear Queue",
-                f"Are you sure you want to clear {len(self.queued_items)} items from the queue?",
+                f"Tem certeza de que deseja limpar {len(self.queued_items)} itens da fila?",
                 QMessageBox.Yes | QMessageBox.No,
                 QMessageBox.No,
             )
@@ -1840,7 +1840,7 @@ class abogen(QWidget):
 
     def start_conversion(self, from_queue=False):
         if not self.selected_file:
-            self.input_box.set_error("Please add a file.")
+            self.input_box.set_error("Por favor, adicione um arquivo.")
             return
 
         # Ensure we honor the currently selected save option when not running from queue
@@ -1977,13 +1977,13 @@ class abogen(QWidget):
 
         # Run GPU acceleration and module loading in a background thread
         def gpu_and_load():
-            self.update_log("Checking GPU acceleration...")
+            self.update_log("Verificando aceleração da GPU...")
             # Pass the use_gpu setting from the checkbox
             gpu_msg, gpu_ok = get_gpu_acceleration(self.gpu_checkbox.isChecked())
             # Store gpu_ok status to use when creating the conversion thread
             self.gpu_ok = gpu_ok
             self.update_log((gpu_msg, gpu_ok))
-            self.update_log("Loading modules...")
+            self.update_log("Carregando módulos...")
             load_thread = LoadPipelineThread(pipeline_loaded_callback)
             load_thread.start()
 
@@ -2018,7 +2018,7 @@ class abogen(QWidget):
         summary_html += "</body></html>"
 
         dialog = QDialog(self)
-        dialog.setWindowTitle("Queue Summary")
+        dialog.setWindowTitle("Resumo da Fila")
         dialog.resize(550, 650)  # Make window resizable and larger
 
         layout = QVBoxLayout(dialog)
@@ -2129,7 +2129,7 @@ class abogen(QWidget):
             self.controls_widget.show()
             self.queue_row_widget.show()  # Show queue row on reset
             self.finish_widget.hide()
-            self.btn_start.setText("Start")
+            self.btn_start.setText("Iniciar")
             # Disconnect only if connected, then reconnect
             try:
                 self.btn_start.clicked.disconnect()
@@ -2226,7 +2226,7 @@ class abogen(QWidget):
                 if os.path.isdir(path):
                     self._show_error_message_box(
                         "Open File Error",
-                        "Cannot open a directory as a file. Please use 'Go to folder' instead.",
+                        "Não é possível abrir um diretório como arquivo. Use 'Ir para pasta' em vez disso.",
                     )
                     return
                 QDesktopServices.openUrl(QUrl.fromLocalFile(path))
@@ -2310,7 +2310,7 @@ class abogen(QWidget):
             # Directly play from cache
             self.preview_playing = True
             self.btn_preview.setIcon(self.stop_icon)
-            self.btn_preview.setToolTip("Stop preview")
+            self.btn_preview.setToolTip("Parar pré-visualização")
             self.btn_preview.setEnabled(True)
 
             def cleanup_cached_play():
@@ -2341,7 +2341,7 @@ class abogen(QWidget):
 
         # If no cache hit, proceed to load pipeline and generate
         self.btn_preview.setEnabled(False)
-        self.btn_preview.setToolTip("Loading...")
+        self.btn_preview.setToolTip("Carregando...")
         self.voice_combo.setEnabled(False)
         self.btn_voice_formula_mixer.setEnabled(False)  # Disable mixer button
         self.btn_start.setEnabled(False)  # Disable start button during preview
@@ -2377,7 +2377,7 @@ class abogen(QWidget):
             )
             self.btn_preview.setIcon(self.play_icon)
             self.btn_preview.setEnabled(True)
-            self.btn_preview.setToolTip("Preview selected voice")
+            self.btn_preview.setToolTip("Pré-visualizar voz selecionada")
             self.voice_combo.setEnabled(True)
             self.btn_voice_formula_mixer.setEnabled(True)  # Re-enable mixer button
             self.btn_start.setEnabled(True)  # Re-enable start button on error
@@ -2428,13 +2428,13 @@ class abogen(QWidget):
             else:  # Should not happen if cache check was done
                 self._show_error_message_box(
                     "Preview Error",
-                    "Cache file expected but not found, please try again.",
+                    "Arquivo de cache esperado mas não encontrado, tente novamente.",
                 )
                 self._preview_cleanup()
                 return
         else:  # Should have temp_wav from preview_thread or handled by cache check
             self._show_error_message_box(
-                "Preview Error", "Preview audio path not found."
+                "Erro de Pré-visualização", "Caminho do áudio de pré-visualização não encontrado."
             )
             self._preview_cleanup()
             return
@@ -2443,7 +2443,7 @@ class abogen(QWidget):
             if hasattr(self, "loading_movie"):
                 self.loading_movie.stop()
             self._show_error_message_box(
-                "Preview Error", "Preview error: No audio generated."
+                "Erro de Pré-visualização", "Erro de pré-visualização: Nenhum áudio gerado."
             )
             self._preview_cleanup()
             return
@@ -2453,7 +2453,7 @@ class abogen(QWidget):
             self.loading_movie.stop()
         self.preview_playing = True
         self.btn_preview.setIcon(self.stop_icon)
-        self.btn_preview.setToolTip("Stop preview")
+        self.btn_preview.setToolTip("Parar pré-visualização")
         self.btn_preview.setEnabled(True)
 
         def cleanup():
@@ -2516,7 +2516,7 @@ class abogen(QWidget):
         except Exception:
             pass  # Ignore error if not connected
         self.btn_preview.setIcon(self.play_icon)
-        self.btn_preview.setToolTip("Preview selected voice")
+        self.btn_preview.setToolTip("Pré-visualizar voz selecionada")
         self.btn_preview.setEnabled(True)
         self.voice_combo.setEnabled(True)
         self.btn_voice_formula_mixer.setEnabled(True)  # Re-enable mixer button

@@ -3,7 +3,7 @@ from abogen.utils import get_version
 # Program Information
 PROGRAM_NAME = "abogen"
 PROGRAM_DESCRIPTION = (
-    "Generate audiobooks from EPUBs, PDFs and text with synchronized captions."
+    "Gerar audiolivros de EPUBs, PDFs e texto com legendas sincronizadas."
 )
 GITHUB_URL = "https://github.com/denizsafak/abogen"
 VERSION = get_version()
@@ -11,24 +11,24 @@ VERSION = get_version()
 # Settings
 CHAPTER_OPTIONS_COUNTDOWN = 30  # Countdown seconds for chapter options
 SUBTITLE_FORMATS = [
-    ("srt", "SRT (standard)"),
-    ("ass_wide", "ASS (wide)"),
-    ("ass_narrow", "ASS (narrow)"),
-    ("ass_centered_wide", "ASS (centered wide)"),
-    ("ass_centered_narrow", "ASS (centered narrow)"),
+    ("srt", "SRT (padrão)"),
+    ("ass_wide", "ASS (largo)"),
+    ("ass_narrow", "ASS (estreito)"),
+    ("ass_centered_wide", "ASS (centralizado largo)"),
+    ("ass_centered_narrow", "ASS (centralizado estreito)"),
 ]
 
 # Language description mapping
 LANGUAGE_DESCRIPTIONS = {
-    "a": "American English",
-    "b": "British English",
-    "e": "Spanish",
-    "f": "French",
+    "a": "Inglês Americano",
+    "b": "Inglês Britânico",
+    "e": "Espanhol",
+    "f": "Francês",
     "h": "Hindi",
-    "i": "Italian",
-    "j": "Japanese",
-    "p": "Brazilian Portuguese",
-    "z": "Mandarin Chinese",
+    "i": "Italiano",
+    "j": "Japonês",
+    "p": "Português Brasileiro",
+    "z": "Chinês Mandarim",
 }
 
 # Supported sound formats

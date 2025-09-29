@@ -63,7 +63,7 @@ class SaveButtonWidget(QWidget):
         super().__init__(parent)
         layout = QHBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
-        self.save_btn = QPushButton("Save", self)
+        self.save_btn = QPushButton("Salvar", self)
         self.save_btn.setFixedWidth(48)
         self.save_btn.clicked.connect(lambda: save_callback(profile_name))
         layout.addStretch()
@@ -339,8 +339,8 @@ class VoiceFormulaDialog(QDialog):
         self._virtual_new_profile = False
         if not profiles:
             # No profiles: show 'New profile' in the list, unsaved, not in JSON
-            self.current_profile = "New profile"
-            self._profile_dirty = {"New profile": True}
+            self.current_profile = "Novo perfil"
+            self._profile_dirty = {"Novo perfil": True}
             self._virtual_new_profile = True
             profiles = {}  # Do not add to JSON yet
         else:
@@ -364,9 +364,9 @@ class VoiceFormulaDialog(QDialog):
         profile_layout.setContentsMargins(0, 0, 0, 0)
         # Profile header and save/new buttons
         header_layout = QHBoxLayout()
-        header_layout.addWidget(QLabel("Profiles:"))
+        header_layout.addWidget(QLabel("Perfis:"))
         header_layout.addStretch()
-        self.btn_new_profile = QPushButton("New profile")
+        self.btn_new_profile = QPushButton("Novo perfil")
         header_layout.addWidget(self.btn_new_profile)
         profile_layout.addLayout(header_layout)
         # Profile list
@@ -378,7 +378,7 @@ class VoiceFormulaDialog(QDialog):
         )
         icon = QIcon(get_resource_path("abogen.assets", "profile.png"))
         if self._virtual_new_profile:
-            item = QListWidgetItem(icon, "New profile")
+            item = QListWidgetItem(icon, "Novo perfil")
             self.profile_list.addItem(item)
             self.profile_list.setCurrentRow(0)
         else:
@@ -397,9 +397,9 @@ class VoiceFormulaDialog(QDialog):
         )  # for type hints
         # Save and management buttons
         mgmt_layout = QVBoxLayout()
-        self.btn_import_profiles = QPushButton("Import profile(s)")
+        self.btn_import_profiles = QPushButton("Importar perfil(s)")
         mgmt_layout.addWidget(self.btn_import_profiles)
-        self.btn_export_profiles = QPushButton("Export profiles")
+        self.btn_export_profiles = QPushButton("Exportar perfis")
         mgmt_layout.addWidget(self.btn_export_profiles)
         profile_layout.addLayout(mgmt_layout)
         # prepare mixer widget
@@ -407,7 +407,7 @@ class VoiceFormulaDialog(QDialog):
         mixer_layout = QVBoxLayout(mixer_widget)
         mixer_layout.setContentsMargins(5, 0, 0, 0)
 
-        self.setWindowTitle("Voice Mixer")
+        self.setWindowTitle("Misturador de Vozes")
         self.setWindowFlags(
             Qt.Window | Qt.WindowCloseButtonHint | Qt.WindowMaximizeButtonHint
         )
@@ -418,14 +418,14 @@ class VoiceFormulaDialog(QDialog):
 
         # Header label and language selector
         self.header_label = QLabel(
-            "Adjust voice weights to create your preferred voice mix."
+            "Ajuste os pesos das vozes para criar sua mistura de voz preferida."
         )
         self.header_label.setStyleSheet("font-size: 13px;")
         self.header_label.setWordWrap(True)
         header_row = QHBoxLayout()
         header_row.addWidget(self.header_label, 1)
         header_row.addStretch()
-        header_row.addWidget(QLabel("Language:"))
+        header_row.addWidget(QLabel("Idioma:"))
         self.language_combo = QComboBox()
         for code, desc in LANGUAGE_OPTIONS:
             flag = get_resource_path("abogen.assets.flags", f"{code}.png")
@@ -444,15 +444,15 @@ class VoiceFormulaDialog(QDialog):
         self.language_combo.currentIndexChanged.connect(self.mark_profile_modified)
         header_row.addWidget(self.language_combo)
         # Preview current voice mix using main window's preview
-        self.btn_preview_mix = QPushButton("Preview", self)
-        self.btn_preview_mix.setToolTip("Preview current voice mix")
+        self.btn_preview_mix = QPushButton("Pré-visualizar", self)
+        self.btn_preview_mix.setToolTip("Pré-visualizar mistura de voz atual")
         self.btn_preview_mix.clicked.connect(self.preview_current_mix)
         header_row.addWidget(self.btn_preview_mix)
         mixer_layout.addLayout(header_row)
 
         # Error message
         self.error_label = QLabel(
-            "Please select at least one voice and set its weight above 0."
+            "Por favor, selecione pelo menos uma voz e defina seu peso acima de 0."
         )
         self.error_label.setStyleSheet("color: red; font-weight: bold;")
         self.error_label.setWordWrap(True)
@@ -489,9 +489,9 @@ class VoiceFormulaDialog(QDialog):
 
         # Buttons
         button_layout = QHBoxLayout()
-        clear_all_button = QPushButton("Clear all")
+        clear_all_button = QPushButton("Limpar tudo")
         ok_button = QPushButton("OK")
-        cancel_button = QPushButton("Cancel")
+        cancel_button = QPushButton("Cancelar")
 
         # Set OK button as default
         ok_button.setDefault(True)
@@ -557,10 +557,10 @@ class VoiceFormulaDialog(QDialog):
         ]
         parent = self.parent()
         if len(dirty_indices) > 1:
-            msg = f"You have unsaved changes in {len(dirty_indices)} profiles. Do you want to save all?"
+            msg = f"Você tem alterações não salvas em {len(dirty_indices)} perfis. Deseja salvar tudo?"
             ret = QMessageBox.question(
                 self,
-                "Unsaved Changes",
+                "Alterações Não Salvas",
                 msg,
                 QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel,
                 QMessageBox.Save,
